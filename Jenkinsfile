@@ -42,7 +42,7 @@ pipeline {
             steps{
                 script{
                     docker.withRegistry("http://.dkr.ecr.us-east-2.amazonaws.com", "ecr:us-east-2:tap_ecr") {
-                        def customImage = docker.build("easyhealth-rest-api:latest")
+                        def customImage = docker.build("rest-api:latest")
                         customImage.push()
                     }
                 }
