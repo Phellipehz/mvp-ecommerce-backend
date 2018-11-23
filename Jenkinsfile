@@ -1,6 +1,4 @@
 pipeline {
-    // AKIAJH3DGBMBFSCEZEEA
-    // fj5ACnycAzhdTsgXwcEh8S6zWOgdfhhNCeQqAKHX 
     environment {
         IMAGE = 'easyhealth:latest'
         ECRURL = 'http://999999999999.dkr.ecr.eu-central-1.amazonaws.com'
@@ -43,7 +41,7 @@ pipeline {
         stage('Build and Implantação') { 
             steps{
                 script{
-                    docker.withRegistry("http://729788531436.dkr.ecr.us-east-2.amazonaws.com", "ecr:us-east-2:tap_ecr") {
+                    docker.withRegistry("http://.dkr.ecr.us-east-2.amazonaws.com", "ecr:us-east-2:tap_ecr") {
                         def customImage = docker.build("easyhealth-rest-api:latest")
                         customImage.push()
                     }
