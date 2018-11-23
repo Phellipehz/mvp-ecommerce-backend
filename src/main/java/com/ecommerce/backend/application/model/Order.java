@@ -2,7 +2,8 @@ package com.ecommerce.backend.application.model;
 
 import javax.persistence.Entity;
 
-@Entity
+import com.ecommerce.backend.base.account.model.BaseEntity;
+
 public class Order {
 
 	
