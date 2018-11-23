@@ -1,5 +1,10 @@
 package com.ecommerce.backend.application.model;
 
-public class Product {
+import javax.persistence.Entity;
+
+import com.ecommerce.backend.base.account.model.BaseEntity;
+
+@Entity
+public class Product extends BaseEntity  {
 
 }
