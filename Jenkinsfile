@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        IMAGE = 'easyhealth:latest'
+        IMAGE = 'rest-api:latest'
         ECRURL = 'http://999999999999.dkr.ecr.eu-central-1.amazonaws.com'
         ECRCRED = 'ecr:eu-central-1:tap_ecr'
     }
