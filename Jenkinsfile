@@ -57,7 +57,7 @@ pipeline {
     }
     post{
         always{
-           sh "docker rmi easyhealth-rest-api:latest | true"
+           sh "docker rmi rest-api:latest | true"
         }
     }
 }
