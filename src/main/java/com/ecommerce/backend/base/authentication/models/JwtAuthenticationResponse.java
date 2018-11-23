@@ -3,12 +3,13 @@ package com.ecommerce.backend.base.authentication.models;
 import java.io.Serializable;
 
 public class JwtAuthenticationResponse implements Serializable {
+	
+    private String token;
+    private Long expiraton;
 
-    private static final long serialVersionUID = 1250166508152483573L;
-    private final String token;
-
-    public JwtAuthenticationResponse(String token) {
+    public JwtAuthenticationResponse(String token, Long expiraton) {
         this.token = token;
+        this.expiraton = expiraton;
     }
 
     public String getToken() {

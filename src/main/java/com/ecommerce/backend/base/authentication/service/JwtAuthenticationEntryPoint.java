@@ -1,4 +1,4 @@
-package com.ecommerce.backend.base.authentication;
+package com.ecommerce.backend.base.authentication.service;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -16,10 +16,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
 
     @Override
     public void commence(HttpServletRequest request,
-                         HttpServletResponse response,
-                         AuthenticationException authException) throws IOException {
-        // This is invoked when user tries to access a secured REST resource without supplying any credentials
-        // We should just send a 401 Unauthorized response because there is no 'login page' to redirect to
+                         HttpServletResponse response, AuthenticationException authException) throws IOException {
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }
 

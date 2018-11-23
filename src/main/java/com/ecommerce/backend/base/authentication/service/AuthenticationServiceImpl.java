@@ -52,8 +52,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
 		final String token = jwtTokenUtil.generateToken(userDetails);
-		final Long expiraton = jwtTokenUtil.getExpirationDateFromToken(token).getTime();
-		return new JwtAuthenticationResponse(token);
+		Long expiration = jwtTokenUtil.getExpirationDateFromToken(token).getTime();
+		return new JwtAuthenticationResponse(token, expiration);
 	}
 
 		@Override
@@ -64,7 +64,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         if (jwtTokenUtil.canTokenBeRefreshed(token, user.getModificationTime())) {
             String refreshedToken = jwtTokenUtil.refreshToken(token);
-    		return new JwtAuthenticationResponse(refreshedToken);
+            Long expiration = jwtTokenUtil.getExpirationDateFromToken(refreshedToken).getTime();
+    		return new JwtAuthenticationResponse(refreshedToken, expiration);
         }
         
         return null;

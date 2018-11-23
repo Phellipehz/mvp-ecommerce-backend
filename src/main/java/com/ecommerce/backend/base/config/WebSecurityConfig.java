@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,8 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.ecommerce.backend.base.authentication.JwtAuthenticationEntryPoint;
-import com.ecommerce.backend.base.authentication.JwtAuthenticationTokenFilter;
+import com.ecommerce.backend.base.authentication.service.JwtAuthenticationEntryPoint;
+import com.ecommerce.backend.base.authentication.service.JwtAuthenticationTokenFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -28,6 +30,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+   
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+    
+    @Bean
+    public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
+        return new JwtAuthenticationTokenFilter();
+    }
+    
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
     
     @Autowired
     @Override
@@ -35,16 +53,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationManagerBuilder
                 .userDetailsService(this.userDetailsService)
                 .passwordEncoder(passwordEncoder());
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
-        return new JwtAuthenticationTokenFilter();
     }
 
     @Override
@@ -65,16 +73,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.js"
                 ).permitAll()
                 .antMatchers(
-                		"/v1/auth/**", "/v1/client/singup", 
-                		"/v1/driver/singup/request", 
-                		"/v1/driver/singup/request/*", 
-                		"/v1/driver/singup/request/*/update", 
-                		"/h2/**", 
-                		"/signin/facebook", 
-                		"/v1/admin/singup", 
-                		"/v1/account/edit/password/token", 
-                		"/v1/account/edit/password/token/verify", 
-                		"/v1/account/edit/password/token/change").permitAll()
+                		"/authentication/**", 
+                		"/account/singup").permitAll()
                 .anyRequest().authenticated();
 
         httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);

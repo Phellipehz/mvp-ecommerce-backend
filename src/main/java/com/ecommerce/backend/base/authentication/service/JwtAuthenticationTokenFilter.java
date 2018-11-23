@@ -1,4 +1,4 @@
-package com.ecommerce.backend.base.authentication;
+package com.ecommerce.backend.base.authentication.service;
 
 import java.io.IOException;
 import javax.servlet.FilterChain;
@@ -6,8 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,11 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.ecommerce.backend.base.authentication.service.JwtTokenUtil;
-
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
-
-    private final Log log = LogFactory.getLog(this.getClass());
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -37,15 +31,12 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String authToken = request.getHeader(this.tokenHeader);
         String username = jwtTokenUtil.getUsernameFromToken(authToken);
 
-        log.info("checking authentication for user " + username);
-
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 
             if (jwtTokenUtil.validateToken(authToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                log.info("authenticated user " + username + ", setting security context. Authorities Count:"+userDetails.getAuthorities().size());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
