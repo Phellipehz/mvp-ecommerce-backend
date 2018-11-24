@@ -26,7 +26,7 @@ public class Product extends BaseEntity {
 	
 	@NotNull
 	@Min(10)
-	Long quantidade;
+	Long amount;
 	
 	public String getName() {
 		return name;
@@ -60,12 +60,12 @@ public class Product extends BaseEntity {
 		this.description = description;
 	}
 
-	public Long getQuantidade() {
-		return quantidade;
+	public Long getAmount() {
+		return amount;
 	}
 
-	public void setQuantidade(Long quantidade) {
-		this.quantidade = quantidade;
+	public void setAmount(Long amount) {
+		this.amount = amount;
 	}
 	
 }
