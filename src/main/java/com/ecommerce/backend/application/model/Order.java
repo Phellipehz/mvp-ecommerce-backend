@@ -7,7 +7,7 @@ import javax.validation.constraints.Min;
 import com.ecommerce.backend.base.account.model.Account;
 import com.ecommerce.backend.base.account.model.BaseEntity;
 
-@Entity
+@Entity(name="OrderItens")
 public class Order extends BaseEntity {
 	
 	@OneToOne
