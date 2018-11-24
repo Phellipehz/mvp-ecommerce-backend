@@ -92,4 +92,10 @@ public class ProductController {
 		return new ResponseEntity<>(rProduct, HttpStatus.OK);
 	}
 	
+	@RequestMapping(path = "/category", method = RequestMethod.GET)
+	public ResponseEntity<List<String>> getAllCategories(){
+		List<String> rProduct = pService.getAllCategories();
+		return new ResponseEntity<>(rProduct, HttpStatus.OK);
+	}
+	
 }

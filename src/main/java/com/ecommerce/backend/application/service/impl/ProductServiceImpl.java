@@ -67,5 +67,10 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> findByCategory(String category) {
 		return pRepository.findByCategoryLike(category);
 	}
+
+	@Override
+	public List<String> getAllCategories() {
+		return pRepository.getAllCategories();
+	}
 	
 }

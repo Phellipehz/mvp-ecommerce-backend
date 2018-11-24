@@ -8,4 +8,5 @@ import com.ecommerce.backend.base.service.CRUDService;
 public interface ProductService extends CRUDService<Product> {
 	List<Product> findByName(String term);
 	List<Product> findByCategory(String category);
+	List<String> getAllCategories();
 }

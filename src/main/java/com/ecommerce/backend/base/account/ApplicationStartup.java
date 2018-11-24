@@ -28,6 +28,17 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 		if(accountVerify == null){
 			acRepository.save(account);
 		}
+		
+		Account accountClient = new Account();
+		accountClient.setClient();
+		accountClient.setEmail("client@client.com");
+		accountClient.setPassword(enc.encode("Client!@#"));
+		
+		Account accountClientVerify = acRepository.findByEmail(accountClient.getEmail());
+		if(accountClientVerify == null){
+			acRepository.save(accountClient);
+		}
+		
 	}
 }
 

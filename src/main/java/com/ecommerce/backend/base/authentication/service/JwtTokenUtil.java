@@ -22,16 +22,12 @@ public class JwtTokenUtil implements Serializable {
 	
     private static final long serialVersionUID = -3301605591108950415L;
 
-    static final String CLAIM_KEY_USERNAME = "sub";
-    static final String CLAIM_KEY_AUDIENCE = "audience";
+    static final String CLAIM_KEY_USERNAME = "username";
+    static final String CLAIM_KEY_ROLE = "role";
     static final String CLAIM_KEY_CREATED = "created";
-    static final String CLAIM_KEY_EXPIRED = "exp";
+    static final String CLAIM_KEY_EXPIRED = "expiration";
 
-    static final String AUDIENCE_UNKNOWN = "unknown";
-    static final String AUDIENCE_WEB = "web";
-    static final String AUDIENCE_MOBILE = "mobile";
-    static final String AUDIENCE_TABLET = "tablet";
-    private String secret = "mySecret";
+    private String secret = "ADirtySecret";
     private Long expiration = 604800L;
 
     public String getUsernameFromToken(String token) {
@@ -68,17 +64,6 @@ public class JwtTokenUtil implements Serializable {
         return expiration;
     }
 
-    public String getAudienceFromToken(String token) {
-        String audience;
-        try {
-            final Claims claims = getClaimsFromToken(token);
-            audience = (String) claims.get(CLAIM_KEY_AUDIENCE);
-        } catch (Exception e) {
-            audience = null;
-        }
-        return audience;
-    }
-
     private Claims getClaimsFromToken(String token) {
         Claims claims;
         try {
@@ -102,19 +87,13 @@ public class JwtTokenUtil implements Serializable {
         return (lastPasswordReset != null && created.before(lastPasswordReset));
     }
 
-    private Boolean ignoreTokenExpiration(String token) {
-        String audience = getAudienceFromToken(token);
-        return (AUDIENCE_TABLET.equals(audience) || AUDIENCE_MOBILE.equals(audience));
-    }
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
 
         claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
-
-        final Date createdDate = new Date();
-        claims.put(CLAIM_KEY_CREATED, createdDate);
-
+        claims.put(CLAIM_KEY_ROLE, userDetails.getAuthorities().toArray()[0]);
+        claims.put(CLAIM_KEY_CREATED, new Date());
         return doGenerateToken(claims);
     }
 
@@ -132,7 +111,7 @@ public class JwtTokenUtil implements Serializable {
     public Boolean canTokenBeRefreshed(String token, Date lastPasswordReset) {
         final Date created = getCreatedDateFromToken(token);
         return !isCreatedBeforeLastPasswordReset(created, lastPasswordReset)
-                && (!isTokenExpired(token) || ignoreTokenExpiration(token));
+                && (!isTokenExpired(token) );
     }
 
     public String refreshToken(String token) {
