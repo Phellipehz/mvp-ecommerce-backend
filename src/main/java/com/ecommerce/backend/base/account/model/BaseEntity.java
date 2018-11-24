@@ -33,6 +33,14 @@ public class BaseEntity {
 		this.creationTime = now;
 		this.modificationTime = now;
 	}
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	@PreUpdate
 	public void preUpdate() {
