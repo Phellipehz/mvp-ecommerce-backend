@@ -20,6 +20,8 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Override
 	public Order create(Order order) {
+		// TODO remover os produtos da lista (quantidade)
+		
 		return oRepository.save(order);
 	}
 

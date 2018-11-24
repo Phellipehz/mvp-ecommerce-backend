@@ -78,7 +78,18 @@ public class ProductController {
 		}else{
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
-		
+	}
+	
+	@RequestMapping(path = "/search/{term}", method = RequestMethod.GET)
+	public ResponseEntity<List<Product>> findProductsByName(@PathVariable("term") String term){
+		List<Product> rProduct = pService.findByName(term);
+		return new ResponseEntity<>(rProduct, HttpStatus.OK);
+	}
+	
+	@RequestMapping(path = "/category/{category}", method = RequestMethod.GET)
+	public ResponseEntity<List<Product>> findProductsBycategory(@PathVariable("category") String category){
+		List<Product> rProduct = pService.findByCategory(category);
+		return new ResponseEntity<>(rProduct, HttpStatus.OK);
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.ecommerce.backend.application.model;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,8 +26,14 @@ public class Product extends BaseEntity {
 	String photo;
 	
 	@NotNull
-	@Min(10)
+	@Min(1)
 	Long amount;
+	
+	@Size(min=2, max = 20, message="Description should have at least 2 characters, and up to 20")
+	String category;
+	
+	@Size(min=2, max = 100, message="Description should have at least 2 characters, and up to 100")
+	String shortDescription;
 	
 	public String getName() {
 		return name;
@@ -66,6 +73,22 @@ public class Product extends BaseEntity {
 
 	public void setAmount(Long amount) {
 		this.amount = amount;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getShortDescription() {
+		return shortDescription;
+	}
+
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription;
 	}
 	
 }

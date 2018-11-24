@@ -54,7 +54,18 @@ public class ProductServiceImpl implements ProductService {
 	@PreAuthorize("hasAuthority('ADMINISTRATOR')")
 	public Product update(Long id, Product t) {
 		//TODO Verificar se nao está alterando id propositalmente
-		return null;
+		Product product = pRepository.getOne(id);
+		return pRepository.save(t);
+	}
+
+	@Override
+	public List<Product> findByName(String term) {
+		return pRepository.findByNameOrCategoryLike(term);
+	}
+
+	@Override
+	public List<Product> findByCategory(String category) {
+		return pRepository.findByCategoryLike(category);
 	}
 	
 }

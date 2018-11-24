@@ -18,6 +18,10 @@ public class Order extends BaseEntity {
 	
 	@OneToOne
 	Account account;
+	
+	ShippingMode shippingMode;
+	
+	PaymentMode paymentMode;
 
 	public Product getProduct() {
 		return product;
@@ -41,6 +45,22 @@ public class Order extends BaseEntity {
 
 	public void setAccount(Account account) {
 		this.account = account;
+	}
+
+	public ShippingMode getShippingMode() {
+		return shippingMode;
+	}
+
+	public void setShippingMode(ShippingMode shippingMode) {
+		this.shippingMode = shippingMode;
+	}
+
+	public PaymentMode getPaymentMode() {
+		return paymentMode;
+	}
+
+	public void setPaymentMode(PaymentMode paymentMode) {
+		this.paymentMode = paymentMode;
 	}
 	
 }
