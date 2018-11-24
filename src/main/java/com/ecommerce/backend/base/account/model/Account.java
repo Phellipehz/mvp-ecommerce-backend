@@ -30,7 +30,6 @@ public class Account extends BaseEntity implements UserDetails{
 	
 	String type; 
 	
-	Boolean fbUser = false;
 	
 	public Account(){
 		this.enabled = true;
@@ -94,14 +93,6 @@ public class Account extends BaseEntity implements UserDetails{
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	public Boolean getFbUser() {
-		return fbUser;
-	}
-
-	public void setFbUser(Boolean fbUser) {
-		this.fbUser = fbUser;
 	}
 
 	@Override
