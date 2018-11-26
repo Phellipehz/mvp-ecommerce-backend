@@ -3,10 +3,11 @@ Backend de E-Commerce em Spring Boot
 ## Endpoints
 
 ### Autenticação
-Endpoint: /authentication
+**Endpoint:** /authentication
 
-Verbo  Ação
-POST   Autentica no sistema com as credenciais informadas
+| Verbo | Ação                                               | 
+|-------|----------------------------------------------------|
+| POST  | Autentica no sistema com as credenciais informadas |
 
 Objeto de Entrada
 ```
@@ -25,17 +26,20 @@ Objeto de saída
 ```
 
 ### Produtos
-Endpoint: /product
+**Endpoint:** /product
 
-Verbo  Ação
-GET    Lista todos os produtos
-POST   Cadastra um produto no sistema
+| Verbo  | Ação                                | 
+|--------|-------------------------------------|
+| GET    | Lista todos os produtos             |
+| POST   | Cadastra um produto no sistema      |
 
-Endpoint: /product/:id
-Verbo  Ação
-GET    Visualiza o produto pelo id
-PUT    Atualiza dados do produto pelo id
-DELETE Deleta o produto pelo if
+**Endpoint:** /product/:id
+
+| Verbo  | Ação                                | 
+|--------|-------------------------------------|
+| GET    | Visualiza o produto pelo id         |
+| PUT    | Atualiza dados do produto pelo id   |
+| DELETE | Deleta o produto pelo if            |
 
 Objeto de Entrada e Saída
 ```
@@ -51,12 +55,13 @@ Objeto de Entrada e Saída
 ```
 
 ### Compras
-Endpoint: /order
+**Endpoint:** /order
 
-Verbo  Ação
-GET    Lista todos os pedidos
-POST   Efetua um pedido 
-
+| Verbo | Ação                   | 
+|-------|------------------------|
+| GET   | Lista todos os pedidos |
+| POST  | Efetua um pedido       |
+   
 ```
 {
    "id": LONG: Saída
