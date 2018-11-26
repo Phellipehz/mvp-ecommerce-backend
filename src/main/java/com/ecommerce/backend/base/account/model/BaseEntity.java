@@ -12,12 +12,7 @@ import javax.persistence.PreUpdate;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @MappedSuperclass
-public class BaseEntity {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", nullable = false, updatable = false)
-	public Long id;     
+public class BaseEntity { 
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, timezone="Brazil/East", locale = "pt-BR")
 	@Column(name = "creation_time", nullable = false)
@@ -32,14 +27,6 @@ public class BaseEntity {
 		Date now = new Date();
 		this.creationTime = now;
 		this.modificationTime = now;
-	}
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	@PreUpdate

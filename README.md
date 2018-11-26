@@ -2,17 +2,27 @@ Backend de E-Commerce em Spring Boot
 
 ## Endpoints
 
-### Contas
-Endpoint: /account
-
-Verbo  Ação
-POST   Cria uma conta no sistema
-
 ### Autenticação
 Endpoint: /authentication
 
 Verbo  Ação
 POST   Autentica no sistema com as credenciais informadas
+
+Objeto de Entrada
+```
+{
+   "email": STRING
+   "password: STRING
+   "name": STRING (Saída)
+}
+```
+
+Objeto de saída
+```
+{
+  "token" : STRING (Token JWT)
+}
+```
 
 ### Produtos
 Endpoint: /product
@@ -27,10 +37,48 @@ GET    Visualiza o produto pelo id
 PUT    Atualiza dados do produto pelo id
 DELETE Deleta o produto pelo if
 
+Objeto de Entrada e Saída
+```
+{
+   "id": LONG (Saída)
+   "name": STRING
+   "value": DOUBLE
+   "photo": STRING (Base64 Image)
+   "description": STRING
+   "shortDescription": STRING
+   "category": STRING
+}
+```
+
 ### Compras
 Endpoint: /order
 
 Verbo  Ação
 GET    Lista todos os pedidos
-POST   Efetua uma compra 
+POST   Efetua um pedido 
+
+```
+{
+   "id": LONG: Saída
+   "products": (List<OrderItem>)[
+	{
+           "id": LONG (Saída)
+           "product": PRODUCT (Para entrada apenas o id do produto basta),
+           "amount": LONG
+        }
+    ],
+   "account": (Account: Saída)
+}
+
+## DevOps
+
+Ambos projetos contém scripts Docker e Jenkins, o build será enviado 
+para uma instancia ECS na AWS automaticamente quando um build for agendado,
+no entanto é necessário:
+
+* Definir qual repositorio o Jenkins deve monitorar
+* Instalar o plugin de ECS para o Jenkins 
+* Atualizar as variáveis de ambiente.
+
+
 

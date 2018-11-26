@@ -1,42 +1,39 @@
 package com.ecommerce.backend.application.model;
 
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.Min;
-
 import com.ecommerce.backend.base.account.model.Account;
 import com.ecommerce.backend.base.account.model.BaseEntity;
 
 @Entity(name="OrderItens")
 public class Order extends BaseEntity {
 	
-	@OneToOne
-	Product product;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, updatable = false)
+	public Long id;    
 	
-	@Min(1)
-	Long amount;
+//	@ElementCollection
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	List<OrderItem> products; //<Produto, Quantidade>
 	
 	@OneToOne
 	Account account;
 	
-	ShippingMode shippingMode;
-	
-	PaymentMode paymentMode;
-
-	public Product getProduct() {
-		return product;
+	public List<OrderItem> getProducts() {
+		return products;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	public Long getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Long amount) {
-		this.amount = amount;
+	public void setProducts(List<OrderItem> products) {
+		this.products = products;
 	}
 
 	public Account getAccount() {
@@ -47,20 +44,12 @@ public class Order extends BaseEntity {
 		this.account = account;
 	}
 
-	public ShippingMode getShippingMode() {
-		return shippingMode;
+	public Long getId() {
+		return id;
 	}
 
-	public void setShippingMode(ShippingMode shippingMode) {
-		this.shippingMode = shippingMode;
-	}
-
-	public PaymentMode getPaymentMode() {
-		return paymentMode;
-	}
-
-	public void setPaymentMode(PaymentMode paymentMode) {
-		this.paymentMode = paymentMode;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 }

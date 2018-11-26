@@ -22,10 +22,10 @@ public class JwtTokenUtil implements Serializable {
 	
     private static final long serialVersionUID = -3301605591108950415L;
 
-    static final String CLAIM_KEY_USERNAME = "username";
+    static final String CLAIM_KEY_USERNAME = "sub";
     static final String CLAIM_KEY_ROLE = "role";
-    static final String CLAIM_KEY_CREATED = "created";
-    static final String CLAIM_KEY_EXPIRED = "expiration";
+    static final String CLAIM_KEY_CREATED = "iat";
+    static final String CLAIM_KEY_EXPIRED = "exp";
 
     private String secret = "ADirtySecret";
     private Long expiration = 604800L;

@@ -26,20 +26,11 @@ public class AuthenticationSystemTest extends BaseSystemTest {
 
 	Account account;
 	
-	@Before
-	public void createAccount(){
-		Account account = new Account();
-		account.setEmail("email@email.com");
-		account.setPassword("password");
-		account.setClient();
-		this.beforeCreateRandomAccount(account);
-	}
-	
 	@Test
     public void authenticate() {
 		JwtAuthenticationRequest request = new JwtAuthenticationRequest();
-		request.setEmail("email@email.com");
-		request.setPassword("password");
+		request.setEmail("admin@admin.com");
+		request.setPassword("Admin!@#");
     	
         ResponseEntity<JwtAuthenticationResponse> responseEntity = 
         		restTemplate.postForEntity("/authentication", request, JwtAuthenticationResponse.class);

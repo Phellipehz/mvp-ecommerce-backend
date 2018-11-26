@@ -2,26 +2,20 @@ package com.ecommerce.backend;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.List;
-
-import javax.validation.Valid;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.ecommerce.backend.application.model.Product;
-import com.ecommerce.backend.base.authentication.models.JwtAuthenticationResponse;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -31,18 +25,29 @@ public class ProductSystemTest extends BaseSystemTest {
 	
 	@Before
 	public void before() throws Exception{
-		this.beforeAuthenticate("", "");
+		this.token = this.beforeAuthenticate("admin@admin.com", "Admin!@#");
 	}
 	
 	@Test
     public void createProduct(){
     	Product product = new Product();
     	product.setName("Relógio Bvlgary IronMan Réplica");
+    	product.setCategory("Relogio");
+    	product.setAmount(10L);
+    	product.setPhoto("PHOTO");
+    	product.setShortDescription("ShortDescript");
+    	product.setDescription("Long Description");
+    	   	
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.set("Authorization", this.token);
+    	HttpEntity<Product> request = new HttpEntity<Product>(product, headers);
     	
     	ResponseEntity<Product> responseEntity = 
-        		restTemplate.postForEntity("/authentication", product, Product.class);
+    			restTemplate.postForEntity("/product", request, Product.class);
+    	
     	Product response = responseEntity.getBody();
-        assertNotNull(response.getName());
+        assertNotNull(response);
+        System.out.println(responseEntity.getStatusCode());
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
     
@@ -57,10 +62,10 @@ public class ProductSystemTest extends BaseSystemTest {
     
 	@Test
     public void getProduct(){
-    	ResponseEntity<JwtAuthenticationResponse> responseEntity = 
-        		restTemplate.getForEntity("/product/1", JwtAuthenticationResponse.class);
-        JwtAuthenticationResponse response = responseEntity.getBody();
-        assertNotNull(response.getToken());
+    	ResponseEntity<Product> responseEntity = 
+        		restTemplate.getForEntity("/product/1", Product.class);
+        Product response = responseEntity.getBody();
+        assertNotNull(response);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
     
@@ -68,40 +73,41 @@ public class ProductSystemTest extends BaseSystemTest {
     public void updateProduct(){
     	Product product = new Product();
     	
-    	ResponseEntity<JwtAuthenticationResponse> responseEntity = 
-        		restTemplate.postForEntity("/product/1", product, JwtAuthenticationResponse.class);
-        JwtAuthenticationResponse response = responseEntity.getBody();
-        assertNotNull(response.getToken());
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.set("Authorization", this.token);
+    	HttpEntity<Product> request = new HttpEntity<Product>(product, headers);
+    	
+    	ResponseEntity<Product> responseEntity = 
+        		restTemplate.postForEntity("/product/1", request, Product.class);
+    	
+        Product response = responseEntity.getBody();
+        assertNotNull(response);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
     
 	@Test
     public void deleteProduct(){
-//    	ResponseEntity<Void> responseEntity = 
-//        		restTemplate.delete("/product/1", Void.class);
-//        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		
+		HttpHeaders headers = new HttpHeaders();
+    	headers.set("Authorization", this.token);
+    	HttpEntity<Product> request = new HttpEntity<Product>(null, headers);
+        
+    	restTemplate.delete("/product/1", request, Void.class);
+       
+        ResponseEntity<Product> responseEntity = 
+        		restTemplate.getForEntity("/product/1", Product.class);
+        Product response = responseEntity.getBody();
+        assertNull(response);
+        assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());
     }
 	
 	@Test
     public void listProductsByName(){
     	ResponseEntity<List> responseEntity = 
-        		restTemplate.getForEntity("/search/{term}", List.class);
+        		restTemplate.getForEntity("/product/search/Relógio", List.class);
         List<Product> response = responseEntity.getBody();
         assertNotNull(response);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
-	
-	@Test
-    public void listProductsByCategory(){
-    	ResponseEntity<List> responseEntity = 
-        		restTemplate.getForEntity("/category/{category}", List.class);
-        List<Product> response = responseEntity.getBody();
-        assertNotNull(response);
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-    }
-	
-    // ========================================================
-    //  Fluxos Alternativos
-    // ========================================================
-    
+	   
 }

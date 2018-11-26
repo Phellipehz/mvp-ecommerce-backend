@@ -28,7 +28,13 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product findById(Long id){
-		return pRepository.getOne(id);
+		System.out.println(id);
+		Product p =  pRepository.getOne(id);
+		System.out.println(p);
+		if(p == null){
+			
+		}
+		return p;
 	}
 
 	@Override
@@ -44,28 +50,20 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	@PreAuthorize("hasAuthority('ADMINISTRATOR')")
 	public Product update(Product t) {
-		//TODO Verificar se nao está alterando id propositalmente
 		return pRepository.save(t);
 	}
 
 	@Override
 	@PreAuthorize("hasAuthority('ADMINISTRATOR')")
 	public Product update(Long id, Product t) {
-		//TODO Verificar se nao está alterando id propositalmente
 		Product product = pRepository.getOne(id);
 		return pRepository.save(t);
 	}
 
 	@Override
-	public List<Product> findByName(String term) {
+	public List<Product> findByNameOrCategory(String term) {
 		return pRepository.findByNameOrCategoryLike(term);
-	}
-
-	@Override
-	public List<Product> findByCategory(String category) {
-		return pRepository.findByCategoryLike(category);
 	}
 
 	@Override

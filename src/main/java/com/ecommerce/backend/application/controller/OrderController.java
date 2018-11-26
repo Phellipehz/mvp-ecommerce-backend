@@ -29,7 +29,7 @@ public class OrderController {
 	}
 
 	@RequestMapping(path = "", method = RequestMethod.POST)
-	public ResponseEntity<Order> createOrder(@Valid @RequestBody Order order){	
+	public ResponseEntity<Order> createOrder(@RequestBody Order order){	
 		Order rOrder = oService.create(order);
 		return new ResponseEntity<>(rOrder, HttpStatus.OK);
 	}

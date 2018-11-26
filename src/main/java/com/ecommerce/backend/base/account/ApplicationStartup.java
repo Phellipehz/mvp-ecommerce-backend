@@ -21,6 +21,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 	public void onApplicationEvent(ApplicationReadyEvent event) {
 		Account account = new Account();
 		account.setAdmin();
+		account.setName("Astolfo");
 		account.setEmail("admin@admin.com");
 		account.setPassword(enc.encode("Admin!@#"));
 		
@@ -31,6 +32,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationReadyE
 		
 		Account accountClient = new Account();
 		accountClient.setClient();
+		accountClient.setName("Joliscreuza");
 		accountClient.setEmail("client@client.com");
 		accountClient.setPassword(enc.encode("Client!@#"));
 		

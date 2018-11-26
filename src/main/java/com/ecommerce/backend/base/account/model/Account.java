@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -13,23 +16,36 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class Account extends BaseEntity implements UserDetails{
 
-	@Size(min = 5, message = "O email tem que ser entre 5 e 30 caracteres!")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false)
+	public Long id;    
+	
+	@Size(min = 5, message = "O email tem que ter no minimo 5 caracteres!")
 	@Column(name = "email", nullable = false, unique = true)
+	@JsonProperty(value = "email")
 	private String email;
 	
-	@Size(min = 6, message = "A senha tem que ser entre 6 e 30 caracteres!")
+	@Size(min = 4, message = "A senha tem que ter no minimo 4 caracteres!")
 	@Column(name = "password", nullable = false)
 	String password;
 	
+	@Size(min = 2, message = "O nome tem que ter no minimo 2 caracteres!")
+	@Column(name = "name", nullable = false)
+	String name;
+	
 	@Column(name = "enabled", nullable = false)
+	@JsonIgnore
 	boolean enabled = true;
 	
+	@Column(name = "type", updatable = false)
+	@JsonIgnore
 	String type; 
-	
 	
 	public Account(){
 		this.enabled = true;
@@ -57,7 +73,7 @@ public class Account extends BaseEntity implements UserDetails{
 	}
 	
 	public Boolean isAdmin(){
-		return "ADMIN".equals(this.type); 
+		return "ADMINISTRATOR".equals(this.type); 
 	}
 	
 	public void setClient() {
@@ -65,7 +81,7 @@ public class Account extends BaseEntity implements UserDetails{
 	}
 	
 	public void setAdmin() {
-		this.type = "ADMIN";
+		this.type = "ADMINISTRATOR";
 	}	
 	
 	public void setEnabled(boolean enabled) {
@@ -121,6 +137,14 @@ public class Account extends BaseEntity implements UserDetails{
 	@Override
 	public String getUsername() {
 		return this.email;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }

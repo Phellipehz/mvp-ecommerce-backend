@@ -7,6 +7,11 @@ public class JwtAuthenticationResponse implements Serializable {
     private String token;
     private Long expiraton;
 
+    
+    public JwtAuthenticationResponse(){
+    	
+    }
+    
     public JwtAuthenticationResponse(String token, Long expiraton) {
         this.token = token;
         this.expiraton = expiraton;
