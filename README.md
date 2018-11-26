@@ -69,6 +69,7 @@ POST   Efetua um pedido
     ],
    "account": (Account: Saída)
 }
+```
 
 ## DevOps
 
@@ -77,8 +78,5 @@ para uma instancia ECS na AWS automaticamente quando um build for agendado,
 no entanto é necessário:
 
 * Definir qual repositorio o Jenkins deve monitorar
-* Instalar o plugin de ECS para o Jenkins 
+* Instalar o [plugin AWS-ECS para o Jenkins](https://plugins.jenkins.io/amazon-ecr) 
 * Atualizar as variáveis de ambiente.
-
-
-
