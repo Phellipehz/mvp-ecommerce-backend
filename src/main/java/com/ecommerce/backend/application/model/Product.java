@@ -43,10 +43,10 @@ public class Product extends BaseEntity {
 	@Min(1)
 	Long amount;
 	
-	@Size(min=2, max = 20, message="Description should have at least 2 characters, and up to 20")
+	@Size(min=2, max = 100, message="Description should have at least 2 characters, and up to 100")
 	String category;
 	
-	@Size(min=2, max = 100, message="Description should have at least 2 characters, and up to 100")
+	@Size(min=2, max = 20, message="Description should have at least 2 characters, and up to 20")
 	String shortDescription;
 	
 	public String getName() {
