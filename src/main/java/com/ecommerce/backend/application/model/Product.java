@@ -36,6 +36,7 @@ public class Product extends BaseEntity {
 	String description;
 	
 	@NotNull
+	@Column(name="photo", columnDefinition="LONGTEXT")
 	String photo;
 	
 	@NotNull

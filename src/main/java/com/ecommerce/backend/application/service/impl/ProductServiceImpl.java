@@ -28,12 +28,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public Product findById(Long id){
-		System.out.println(id);
 		Product p =  pRepository.getOne(id);
-		System.out.println(p);
-		if(p == null){
-			
-		}
 		return p;
 	}
 
@@ -58,7 +53,14 @@ public class ProductServiceImpl implements ProductService {
 	@PreAuthorize("hasAuthority('ADMINISTRATOR')")
 	public Product update(Long id, Product t) {
 		Product product = pRepository.getOne(id);
-		return pRepository.save(t);
+		product.setId(id);
+		product.setAmount(t.getAmount());
+		product.setCategory(t.getCategory());
+		product.setName(t.getName());
+		product.setPhoto(t.getPhoto());
+		product.setShortDescription(t.getShortDescription());
+		product.setValue(t.getValue());
+		return pRepository.save(product);
 	}
 
 	@Override
