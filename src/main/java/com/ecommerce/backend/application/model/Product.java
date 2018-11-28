@@ -40,7 +40,7 @@ public class Product extends BaseEntity {
 	String photo;
 	
 	@NotNull
-	@Min(1)
+	@Min(0)
 	Long amount;
 	
 	@Size(min=2, max = 100, message="Description should have at least 2 characters, and up to 100")
